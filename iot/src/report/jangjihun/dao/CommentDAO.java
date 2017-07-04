@@ -45,12 +45,12 @@ public class CommentDAO {
 	public boolean insertComment(){
 		String sql="insert into comment_info(content,UI_num,B_num,reg_date) values('코멘트내용1',2,15,now());";
 		try{
-			Statement st=con.createStatement();
+			Statement st=con.createStatement();   //쿼리창 생성,  createStatement()은 쿼리를 쓰면 바로 실행된다.
 			int result=st.executeUpdate(sql);
 			if(result==1){
 				con.commit();
-				st.close();
-				st=null;
+				st.close();              //쿼리창 꺼버리기 , 반드시 close해주기, 안꺼주면 위험함
+				st=null;                 //
 				return true;
 			}
 		}catch(Exception e){
