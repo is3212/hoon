@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script>
+function cal(){
+var obj1=parseInt(document.getElementById("num1").value);
+var obj2=document.getElementById("op").value;
+var obj3=parseInt(document.getElementById("num2").value);
+var result=0;
+
+if(obj2=="+"){
+ result=obj1+obj3;
+	
+}else if(obj2=="-"){
+	result=obj1-obj3;
+}
+else if(obj2=="*"){
+	result=obj1*obj3;
+}
+else if(obj2=="/"){
+	result=obj1/obj3;
+}else{
+	document.writeln("연산자 잘못 입력");
+}
+document.getElementById("result").value=result;
+}
+</script>
+<body>
+<table board="1">
+<tr>
+<td>num1 : <input type="text" name="num1" id="num1"/></td>
+<td>계산식 : <input type="text" name="op" id="op"/></td>
+<td>num2 : <input type="text" name="num2" id="num2"/></td>
+<td>결과값 : <input type="text" name="result" id="result" disabled/></td>
+</tr>
+<tr>
+<td colspan="4" align="center"><input type="button" value="계산하기" onclick="cal()"/></td>
+</tr>
+</table>
+</body>
+</html>

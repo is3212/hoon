@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script>
+	function table() {
+		var row = parseInt(document.getElementById("row").value);
+		var column = parseInt(document.getElementById("column").value);
+		var tableStr = "<table border='1'>";
+
+		for (var i = 1; i <= row; i++) {
+			tableStr += "<tr>";
+			for (var j = 1; j <= column; j++) {
+				tableStr += "<td alingn='center'>" + i + "행" + j + "열</td>";
+			}
+			tableStr += "</tr>";
+		}
+	
+		tableStr += "</table>"
+		document.getElementById("result_div").innerHTML=tableStr;
+	}
+</script>
+<body>
+	<table board="1">
+		<tr>
+			<td>행 : <input type="text" name="row" id="row" /></td>
+			<td>열: <input type="text" name="column" id="column" /></td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center"><input type="button"
+				value="표 만들기" onclick="table()" /></td>
+		</tr>
+	</table>
+	<div id="result_div"></div>
+</body>
+</html>
