@@ -20,9 +20,24 @@ public class UserServlet extends HttpServlet{
 	public void doGet(HttpServletRequest req, HttpServletResponse resq) throws IOException, ServletException{
 		req.setCharacterEncoding("UTF-8");
 		//html화면에서 던진 값을 각각 String 변수로 받기 시작
-		String command = req.getParameter("command");
 		UserService us = new UserService();
+		//String name1=req.getParameter("name");
+		//String pwd1=req.getParameter("pass");
+		//System.out.println("Input html에서 너님이 던진값 =>" + name1 + pwd1);
 		
+		//String op1=req.getParameter("op");
+		//System.out.println("연산자=>" + op1);
+		
+		//String id1=req.getParameter("id");
+		//String pwd2=req.getParameter("pwd");
+		
+		//System.out.println("id=>" + id1 + " 비밀번호 =>" + pwd2 );
+		
+		
+		String command = req.getParameter("command");
+		if(command==null){
+			return;
+		}
 		
 		//UserService에 있는 insertUser(HashMap hm)이라는 함수를 호출하기 위해
 		//UserService로 us 레퍼런스 변수를 생성

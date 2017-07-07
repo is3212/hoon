@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script>
+function makeSureForm(){
+	var nameObj=document.getElementById("name");
+	var passObj=document.getElementById("pass");
+	var dateObj=document.getElementById("s_date");
+	var emailObj=document.getElementById("t_email");
+	var colorObj=document.getElementById("s_color");
+	var checkObj=document.getElementById("ch");
+	
+
+	alert(nameObj.value);
+	alert(passObj.value);
+	alert(dateObj.value);
+	alert(emailObj.value);
+	alert(colorObj.value);
+	alert(checkObj.value);
+}
+function changeColor(){
+	var colorObj=document.getElementById("s_color");
+	
+	var nameObj=document.getElementById("name");
+	var passObj=document.getElementById("pass");
+	var dateObj=document.getElementById("s_date");
+	var emailObj=document.getElementById("t_email");
+
+	nameObj.style="color." + colorObj.value;
+	passObj.style="color." + colorObj.value;
+	dateObj.style="color." + colorObj.value;
+	emailObj.style="color." + colorObj.value;
+	
+}
+</script>
+<body>
+<form id="test_form" method="get" action="/test.user">
+이름 : <input type="text" id="name" name="name"/><br/>
+비밀번호 : <input type="password" id="pass" name="pass"/><br/>
+일자 : <input type="date"  name="s_date" id="s_date"/><br/>
+이메일 : <input type="email" name="t_email" id="t_email"/><br/>
+색상 : <input type="color"  id="s_color" onchange="changeColor()" name="s_color"/><br/>
+성별 : <input type="checkbox" name="ch" id="ch"/>남자 <input type="checkbox" name="ch" id="ch"/> 여자<br/>
+<input type="button" value="확인" onclick="makeSureForm()"/>
+<input type="submit" value="전송"/>
+</form>
+</body>
+</html>

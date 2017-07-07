@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script>
+function checkOnSubmit(){
+	var op1=document.getElementById("op").value;
+	if(op1==""){
+	alert("어? 너 서버로 전송못해!!!!");
+	return false;
+	}
+	return true;
+}
+</script>
+<body>
+<form method="get" action="/test.user" onsubmit="return checkOnSubmit()">
+<select name="op" id="op">
+<option value="">연산자 선택</option>
+<option value="+">+</option>
+<option value="/">/</option>
+<option value="*">*</option>
+<option value="-">-</option>
+</select>
+<br/>
+<input type="submit" value="연산자 전송"/>
+</form>
+</body>
+</html>
