@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>게시판 입력</title>
+</head>
+<script>
+function checkValue(){
+var contentObj=document.getElementById("content");
+if(contentObj.value.trim()==""){
+	alert("코멘트 입력안해");
+	return false;
+}
+var UIObj=document.getElementById("UI_num");
+var UINum=parseInt(UIObj.value);
+if(isNaN(UINum)){
+	alert("숫자 입력하라고");
+	return false;
+}
+var BObj=document.getElementById("B_num");
+var BNum=parseInt(BObj.value);
+if(isNaN(BNum)){
+	alert("숫자 입력하라고");
+	return false;
+}
+return ture;
+}
+</script>
+<body>
+<form method="get" action="asdfasdfasdfasdfasdf.comment" onsubmit="return checkValue()">
+코멘트 : <input type="text" name="content" id="content"/><br/>
+UI_num :<textarea type="text" name="UI_num" id="UI_num"/></textarea><br/>
+B_num : <input type="text" name="B_num" id="B_num"/><br/>
+<input type="submit" value="글쓰기">
+<input type="hidden"  name="command" id="command" value="insert"/>
+</form>
+</body>
+</html>

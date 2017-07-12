@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script>
+function checkValue(){
+	var numObj=document.getElementById("num");
+	
+	if(numObj.value==""){
+		alert("num값을 입력하시오!!!");
+		return false;
+	}
+}
+</script>
+<body>
+<form method="get" action="asdfasdfasdfasdfasdf.board" onsubmit="return checkValue()">
+업데이트 할 num 값 : <input type="text" name="num" id="num"/><br/>
+title : <input type="text" name="title" id="title"/><br/>
+content : <input type="text" name="content" id="content"/><br/>
+writer : <input type="text" name="user_num" id="user_num"/><br/>
+<input type="submit" value="업데이트하기">
+<input type="hidden" name="command" id="command" value="update"/> 
+</form>
+</body>
+</html>

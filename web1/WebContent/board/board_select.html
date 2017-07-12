@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script>
+function checkValue(){
+var writeObj=document.getElementById("user_num");
+if(writeObj.value==""){
+	alert("writer를 입력하시오!!!");
+	return false;
+}
+</script>
+<body>
+<form method = "get" action="asdfasdfasdfasdfasdf.board" onsubmit="return checkValue()">
+writer : <input type="text" name="user_num" id="user_num"/> <br/>
+<input type="submit" value="검색"/>
+<input type="hidden" name="command" value="select"/>
+</form>
+</body>
+</html>

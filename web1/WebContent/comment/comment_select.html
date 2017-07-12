@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script>
+function checkValue(){
+var numObj=document.getElementById("num");
+if(numObj.value==""){
+	alert("num을 입력하시오!!!");
+	return false;
+}
+</script>
+<body>
+<form method = "get" action="asdfasdfasdfasdfasdf.comment" onsubmit="return checkValue()">
+comment num : <input type="text" name="num" id="num"/> <br/>
+<input type="submit" value="검색"/>
+<input type="hidden" name="command" value="select"/>
+</form>
+</body>
+</html>
