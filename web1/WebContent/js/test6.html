@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script>
+function getAllValue(){
+	<!-- 하나의 네임으로 여러개의 엘리먼트를 가져온다. 네임은 elements!!!!-->
+	<!-- 그러므로 elObjs는 3개의 값이 있는 배열값을 가진다 -->
+	var elObjs=document.getElementsByName("txt");
+	var maxNum=elObjs.length;
+	for(var i=0;i<maxNum;i++){
+		var nObj=elObjs[i];
+		alert(nObj.value);	
+	}
+}
+</script>
+<body>
+<form>
+<input type="text" id="blur1" name="txt"/>
+<input type="text" id="blur2" name="txt"/>
+<input type="text" id="blur3" name="txt"/>
+<input type="button" value="모든값 가져오기" onclick="getAllValue()"/>
+</form>
+</body>
+</html>

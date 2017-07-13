@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script>
+function searchFather(eObj){
+	var fObj=eObj.form;
+	var maxNum=fObj.elements.length;
+	for(var i=0;i<maxNum;i++){
+		var nObj=fObj.elements[i];
+		if(i%2!=0 && i!=maxNum-1){
+			var checkNum=new Number(nObj.value);	
+		if(isNaN(checkNum)){
+			alert("짝수인" + (i+1) +"번째는  숫자만 입력하라고!!!");
+			nObj.value="";
+			nObj.focus();
+			return false;
+		}
+		}
+	}
+	return false;
+}
+</script>
+<body>
+<form onsubmit="checkForm(this)" action="test2.html">
+<input type="text"/>
+<input type="text"/>
+<input type="text"/>
+<input type="text"/>
+<input type="text"/>
+<input type="text"/>
+<input type="button" value="전송" onclick="searchFather(this)"/>
+</form>
+</body>
+</html>
