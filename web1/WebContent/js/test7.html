@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script>
+function makeInput(){
+	var eObj=document.getElementById("makeCnt");
+	var divObj=document.getElementById("gDiv");
+	var checkNum=new Number(eObj.value);
+	
+	if(isNaN(checkNum)){
+		alert("숫자만 입력하시오");
+		eObj.value="";
+		eObj.focus();
+		return false;
+	}
+	var inputStr="";
+	for(var i=0;i<checkNum;i++){
+		inputStr+="<input type='text' name='txt'>";
+	}
+	divObj.innerHTML=inputStr;
+	
+	return false;
+	}
+
+function searchInput(){
+	//makething로직이 제대로 돌면 r_div에 input박스들이 들어갈테니까
+	//거기서 값을 찾는 로직을 넣어야지
+	var eObjs=document.getElementsByName("txt");
+	var sObj=document.getElementById("searchValue");
+	var maxNum=eObjs.length;
+	
+	for(var i=0;i<maxNum;i++){
+		if(eObjs[i].value.indexOf(sObj.value)>=0){                   //indexOf : 값이 없으면 -1이 나온다
+			eObjs[i].value="찾았다";
+		eObjs[i].focus();
+		return;
+		}
+		else{
+			alert((i+1) + "번째 input박스에 값이 포함되어 있지않다.");
+		}
+		
+	}
+}
+</script>
+<body>
+<input type="text" id="makeCnt" name="makeCnt"/>
+<input type="button" value="생성" onclick="makeInput()">
+<div id="gDiv"></div>
+<input type="text" id="searchValue" name="searchValue"/>
+<input type="button" value="값찾기" onclick="searchInput()">
+</body>
+</html>
