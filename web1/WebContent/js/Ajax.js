@@ -1,33 +1,36 @@
 /**
  * 
  */
-var str = "name,id,pwd";
-var strs = str.split(",");    //split : 문자열을 배열로 만들어준다. ,로 구분해서     strs[0]=name 이렇게 
-var param = "";
-for(var i=0;i<strs.length;i++){
-	var value = document.getElementById(strs[i]).value;
-	param += "&" + strs[i] + "=" + value;
-}
 
-var AjaxUtil= function(url, arrParams, method, aSync){        //method와 aSync를 안넣어주면
-	this.fAction=url;
-	this.fMethod=method ? method : "get";                                 //method는 undefine 이므로 get방식이 된다.
-	var params="?action=LOGIN&id=" + encodeURIComponent(userid);
-	this.fAsync=aSync ? aSync : true;       //싱크 true면 비동기 false면 동기,         //aSync는 undefine 이므로 true이므로 비동기가 된다.
-	xmlHttpObj.onreadystatechange=function(){              //서버에 요청한걸 서버로부터 응답이 준비되었을때 처리할 동작을 지정
-		if(xmlHttpObj.readyState==4 && xmlHttpObj.status==200){         //200일때 로직 다 돌고 완료, 4일때 컴플릿 된거,  0=요청이 초기화 되지 않음
-			//1 : 서버 접속이 이루어짐, 2:요청이 수신됨, 3:처리요청 됨, 4:완성된 요청과 응답이 준비됨.          200:ok,     404:페이지를 찾을 수 없음
-			var result=decodeURLIComponent(xmlHttpObj.responseText);
-			if(result=="success"){
-				location.href="../user/welcome.jsp"
-			}else{
-				alert(result);
-			}
-		}
+var AjaxUtil = function(params){
+	this.params = params;
+	
+	getHttpXmlObj = function(){
+		if(window.XMLHttpRequest){
+	  		return new XMLHttpRequest();
+	 	}else if(window.ActiveXObject){
+	  		return new ActiveXObject("Microsoft.XMLHTTP");
+	 	}
+		alert("해당 브라우져가  Ajax를 지원하지 않습니다.");
 	}
-	xmlHttpObj.open(method, url+params,sync);
-	if(method=="post"){
-		xmlHttpObj.setRequestHeader("Content-type", "application/x-www-form-urlencoded");    //파일 업로드하기위해서 post방식 쓴다 get방식은 못함
+	this.xhr = getHttpXmlObj();
+	var method = "get";
+	var url = "test.user";
+	var aSync = true;
+	this.xhr.onreadystatechange=function(){
+   		if (this.readyState==4){
+   			if(this.status==200){
+	   			var result = decodeURIComponent(this.responseText);
+	   			alert(result);
+   			}
+   		}
 	}
-	xmlHttpObj.send(params);
+	this.changeCallBack = function(func){
+		this.xhr.onreadystatechange = func;
+	}
+   	this.xhr.open(method, url+params, aSync);
+   	this.send = function(){
+   		this.xhr.send.arguments = this;
+   	   	this.xhr.send();
+   	}
 }

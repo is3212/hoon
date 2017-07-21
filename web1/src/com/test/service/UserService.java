@@ -9,24 +9,29 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import com.test.common.DBConn;
 import com.test.common.DBConn2;
+import com.test.dto.UserInfo;
 
 public class UserService {
 	
-	public boolean InsertUser(HashMap<String,String> hm){
+	public boolean InsertUser(UserInfo ui){
 		Connection con = null;
 		PreparedStatement ps=null;
 		try{
 		con=DBConn2.getCon();
-		String sql="insert into user_info(id, pwd, name, class_num, age)";
-			sql+=" values(?,?,?,?,?)";
+		String sql="insert into user_info(useid,username,age,address,hp1,hp2,hp3,userpwd)";
+			sql+=" values(?,?,?,?,?,?,?,?)";
 			
 			ps=con.prepareStatement(sql);
-			ps.setString(1, hm.get("id"));
-			ps.setString(2, hm.get("pwd"));
-			ps.setString(3, hm.get("name"));
-			ps.setString(4, hm.get("class_num"));
-			ps.setString(5, hm.get("age"));
+			ps.setString(1, ui.getUserId());
+			ps.setString(2, ui.getUserName());
+			ps.setInt(3, ui.getUserAge());
+			ps.setString(4, ui.getUserAddress());
+			ps.setString(5, ui.getUserHp1());
+			ps.setString(6, ui.getUserHp2());
+			ps.setString(7, ui.getUserHp3());
+			ps.setString(8, ui.getUserPwd());
 			int result=ps.executeUpdate();
 			if(result==1){
 				con.commit();
@@ -47,14 +52,20 @@ public class UserService {
 		return false;
 	}
 
-	public boolean deleteUser(HashMap<String, String> hm){
+	
+	
+	
+	
+	
+	
+	public boolean deleteUser(UserInfo ui){
 		Connection con=null;
 		PreparedStatement ps=null;
 		try{
 			con=DBConn2.getCon();
-			String sql="delete from user_info where num=?";
+			String sql="delete from user_info where usernum=?";
 			ps=con.prepareStatement(sql);
-			ps.setString(1, hm.get("num"));
+			ps.setInt(1, ui.getUserNum());
 			int result=ps.executeUpdate();
 			if(result>0){
 				con.commit();
@@ -75,17 +86,17 @@ public class UserService {
 		return false;
 	}
 	
-	public boolean updateUser(HashMap<String, String> hm){
+	public boolean updateUser(UserInfo ui){
 		Connection con=null;
 		PreparedStatement ps=null;
 		try{
 			con = DBConn2.getCon();
-			String sql="update user_info set name=?, class_num=?, age=? where num=?";
+			String sql="update user_info set username=?, useid=?, age=? where usernum=?";
 			ps=con.prepareStatement(sql);
-			ps.setString(1, hm.get("name"));
-			ps.setString(2, hm.get("class_num"));
-			ps.setString(3, hm.get("age"));
-			ps.setString(4, hm.get("num"));
+			ps.setString(1, ui.getUserName());
+			ps.setString(2, ui.getUserId());
+			ps.setInt(3, ui.getUserAge());
+			ps.setInt(4, ui.getUserNum());
 			int result=ps.executeUpdate();
 			if(result==1){
 				con.commit();
@@ -106,37 +117,68 @@ public class UserService {
 		return false;
 }
 	
-	public List<HashMap> selectUser(HashMap<String, String> hm){
+	public String checkPwd(String pwd1, String pwd2){
+		if(pwd1.equals(pwd2)){
+			return "로그인 성공";
+		}
+		return "비밀번호 틀렸어 임마!";
+	}
+	public String loginUser(UserInfo ui){
+		Connection con = null;
+		PreparedStatement ps = null;
+		try{
+			con = DBConn2.getCon();
+			String sql = "select userpwd from user_info where useid=?";
+			ps = con.prepareStatement(sql);
+			ps.setString(1, ui.getUserId());
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				String userpwd = rs.getString("userpwd");
+				return checkPwd(userpwd, ui.getUserPwd());
+			}
+		}catch(Exception e){
+			
+		}
+		return "그런 아이디 없다잖아!!";
+		
+	}
+
+	public List selectUser(UserInfo ui){
 		Connection con=null;
 		PreparedStatement ps=null;
 		try{
 		con=DBConn2.getCon();
-		List<HashMap> userlist=new ArrayList<HashMap>();
-		hm=new HashMap<String, String>();
-		String sql="Select * from user_info";
-		if(hm.get("name")!=null){
-		sql+=" where name like ?";
-		}
-		ps=con.prepareStatement(sql);
-		if(hm.get("name")!=null){
-			ps.setString(1, hm.get("name"));
-		}
-		ResultSet rs=ps.executeQuery();
-		ResultSetMetaData rsmd=rs.getMetaData();
+		//List userlist=new ArrayList();
+		String sql = "select usernum,useid,username,age,address,hp1,hp2,hp3,userpwd from user_info";
+        if(ui.getUserName()!=null){
+           sql += " where username like ?";
+        }
+        ps=con.prepareStatement(sql);
+        if(ui.getUserName()!=null){
+        	ps.setString(1, ui.getUserName());
+        }
+        ResultSet rs = ps.executeQuery();
+		List userList = new ArrayList();
 		while(rs.next()){
-		HashMap hm2 = new HashMap();	
-		int colCount=rsmd.getColumnCount();
-		for(int i=1;i<=colCount;i++){
-			String colName=rsmd.getColumnName(i);
-			hm2.put(colName, rs.getString(colName));
+			UserInfo ui2=new UserInfo();
+			ui2.setUserNum(rs.getInt("usernum"));
+			ui2.setUserName(rs.getString("username"));
+			ui2.setUserId(rs.getString("useid"));
+			ui2.setUserAge(rs.getInt("age"));
+			ui2.setUserAddress(rs.getString("address"));
+			ui2.setUserHp1(rs.getString("hp1"));
+			ui2.setUserHp2(rs.getString("hp2"));
+			ui2.setUserHp3(rs.getString("hp3"));
+			ui2.setUserPwd(rs.getString("userpwd"));
+			userList.add(ui2);
 		}
-		userlist.add(hm2);
-		}
-		con.close();
-		return userlist;
-	}catch(SQLException | ClassNotFoundException e){
+		return userList;
+	}catch (ClassNotFoundException e) {
+		e.printStackTrace();
+	} catch (SQLException e) {
 		e.printStackTrace();
 	}
 	return null;
 	}
+
 }

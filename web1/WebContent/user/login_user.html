@@ -14,33 +14,29 @@ function getHttpXmlObj(){
 	alert("해당 브라우져가 Ajax를 지원하지 않습니다.");
 }
 
-function doSignIn(){
-	var idStr="useid,userpwd,username,address,hp1,hp2,hp3,age,command";
-	var lengthStr="30,100,100,200,4,4,4,3,100";
-	var typeStr="s,s,s,s,n,n,n,n,s"
+function doLogin(){
+	var idStr="useid,userpwd,command";
+	var lengthStr="30,100,100";
+	var typeStr="s,s,s"
 	var params="?";
 	var ids=idStr.split(",");
 	var lengths=lengthStr.split(",");
-	var types = typeStr.split(",")
+	var types=typeStr.split(",")
 	for(var i=0;i<ids.length;i++){
 		var maxLength=new Number(lengths[i]);
 		var typeVali=types[i];
 		var elObj=document.getElementById(ids[i]);
 		if(!isNaN(maxLength)){
-			if(elObj.value.length>maxLength){
-				alert("제한길이를 넘었습니다. 확인해주세요");
-				elObj.value="";
-				elObj.focus();
-				return;
-			}
-		
-	}
-		if(typeVali=="n"){
-			if(isNaN(new Number(elObj.value))){
-				alert("숫자만 입력해주세요.");
-				elObj.value="";
-				elObj.focus();
-				return;
+			if(elObj.value==""){
+				if(i==0){
+					alert("아이디를 입력하시오.");
+					elObj.focus();
+					return;
+				}else if(i==1){
+					alert("비밀번호를 입력하시오.");
+					elObj.focus();
+					return;
+				}
 			}
 		}
 		params+=ids[i]+ "=" + elObj.value+"&";
@@ -60,15 +56,14 @@ function doSignIn(){
 		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	}
 	xhr.send();
-	//alert(params);
 }
 </script>
 <body>
 
-<div width="100%" id="bd_div">
+<div width="100%" id="log_div">
 <table border="1" cellspacing="0" cellpadding="0" width="400" align="center">
 <tr>
-	<td colspan="2"><p align="center"> = 회원 가입 = </p></td>
+	<td colspan="2"><p align="center"> = 로그인 = </p></td>
 </tr>
 <tr>
 	<td align="center">아이디</td>
@@ -78,30 +73,12 @@ function doSignIn(){
 	<td align="center">비밀번호</td>
 	<td><input type="password" name="userpwd" id="userpwd" maxlength="100"/></td>
 </tr>
-
 <tr>
-	<td align="center">이름</td>
-	<td><input type="text" name="username" id="username" maxlength="100"/></td>
-</tr>
-<tr>
-	<td align="center">주소</td>
-	<td><input type="text" name="address" id="address" size="35" maxlength="200"/></td>
-</tr>
-<tr>
-	<td align="center">휴대폰 번호</td>
-	<td><input type="text" name="hp1" id="hp1" size="4" maxlength="4"/> - <input type="text" name="hp2" id="hp2" size="4" maxlength="4"/> - <input type="text" name="hp3" id="hp3" size="4" maxlength="4"/></td>
-</tr>
-<tr>
-	<td align="center">나이</td>
-	<td><input type="text" name="age" id="age" size="3" maxlength="3"/></td>
-</tr>
-
-<tr>
-	<td colspan="2" align="center"><input type="button" value="회원가입" onclick="doSignIn()"/></td>
+	<td colspan="2" align="center"><input type="button" value="로그인" onclick="doLogin()"/></td>
 </tr>
 </table>
 </div>
-<input type="hidden"  name="command" id="command" value="SIGNIN"/>
+<input type="hidden"  name="command" id="command" value="LOGIN"/>
 
 </body>
 </html>
