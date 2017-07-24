@@ -15,7 +15,7 @@ var AjaxUtil = function(params){
 	}
 	this.xhr = getHttpXmlObj();
 	var method = "get";
-	var url = "test.user";
+	var url = "test.board";
 	var aSync = true;
 	this.xhr.onreadystatechange=function(){
    		if (this.readyState==4){

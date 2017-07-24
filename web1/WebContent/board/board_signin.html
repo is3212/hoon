@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<script>
+function getHttpXmlObj(){
+	if(window.XMLHttpRequest){
+		return new XMLHttpRequest();
+	}else if(window.ActiveXObject){
+		return new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	alert("해당 브라우져가 Ajax를 지원하지 않습니다.");
+}
+function dosignin(){
+	var idStr="bititle,bicontent,bipwd,creusr,credat,command";
+	var lengthStr="255,300,100,100,100,100";
+	var typeStr="s,s,s,s,s,s"
+	var params="?";
+	var ids=idStr.split(",");
+	var lengths=lengthStr.split(",");
+	var types = typeStr.split(",")
+	for(var i=0;i<ids.length;i++){
+		var maxLength=new Number(lengths[i]);
+		var typeVali=types[i];
+		var elObj=document.getElementById(ids[i]);
+		if(!isNaN(maxLength)){
+			if(elObj.value.length>maxLength){
+				alert("제한길이를 넘었습니다. 확인해주세요");
+				elObj.value="";
+				elObj.focus();
+				return;
+			}
+		
+	}
+		if(typeVali=="n"){
+			if(isNaN(new Number(elObj.value))){
+				alert("숫자만 입력해주세요.");
+				elObj.value="";
+				elObj.focus();
+				return;
+			}
+		}
+		params+=ids[i]+ "=" + elObj.value+"&";
+	}
+	var xhr=getHttpXmlObj();
+	var method="get";
+	var url="test.board";
+	var aSync=true;
+	xhr.onreadystatechange=function(){
+		if(xhr.readyState==4 && xhr.status==200){
+			var result=decodeURIComponent(xhr.responseText);
+			alert(result);
+		}
+	}
+	xhr.open(method, url+params, aSync);
+	if(method=="post"){
+		xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	}
+	xhr.send();
+	//alert(params);
+}
+
+</script>
+<body>
+
+<div width="100%" id="bd_div">
+<table border="1" cellspacing="0" cellpadding="0" width="400" align="center">
+<tr>
+	<td colspan="2"><p align="center"> = 게시판 = </p></td>
+</tr>
+<tr>
+	<td align="center">제목</td>
+	<td><input type="text" name="bititle" id="bititle" maxlength="255"/></td>
+</tr>
+<tr>
+	<td align="center">내용</td>
+	<td><input type="text" name="bicontent" id="bicontent" size="300" maxlength="300"/></td>
+</tr>
+
+<tr>
+	<td align="center">비밀번호</td>
+	<td><input type="password" name="bipwd" id="bipwd" maxlength="100"/></td>
+</tr>
+<tr>
+	<td align="center">작성자</td>
+	<td><input type="text" name="creusr" id="creusr" maxlength="100"/></td>
+</tr>
+<tr>
+	<td align="center">날짜</td>
+	<td><input type="date" name="credat" id="credat" maxlength="100"/></td>
+</tr>
+<tr>
+	<td colspan="2" align="center"><input type="button" value="작성" onclick="dosignin()"/></td>
+</tr>
+</table>
+</div>
+<input type="hidden"  name="command" id="command" value="SIGNIN"/>
+
+</body>
+</html>
