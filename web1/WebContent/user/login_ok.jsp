@@ -52,6 +52,13 @@ try{
 	}
 }catch(Exception e){
 	System.out.println(e);
+}finally{
+	if(ps!=null){
+		ps.close();
+		ps=null;
+	}if(con!=null){
+		DBConn2.closeCon();
+	}
 }
 if(result.equals("")){
 	result="그런 아이디 없음";
@@ -59,6 +66,7 @@ if(result.equals("")){
 out.print(result);
 }
 else{
+	result="로그아웃 되셨습니다.";
 	session.invalidate();  //로그아웃 , 세션 초기화
 }
 %>
