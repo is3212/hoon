@@ -14,6 +14,7 @@ public void printStr(String str){
 }
 %>
 <%
+
 String userId=(String) session.getAttribute("useid");
 String userName="";
 int age=0;
@@ -35,11 +36,13 @@ String rootPath=request.getContextPath();
 Date toDate=new Date();
 SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 String toDateStr=sdf.format(toDate);
+String init=request.getParameter("init");
+String defaultUrl="";
+if(init==null&&!login){
+defaultUrl=rootPath + "/user/login.jsp?init=1";
+response.sendRedirect(defaultUrl);
+}
 %>
-<%
-String boardPwd=(String) session.getAttribute("bipwd");
-%>
-
 <script src="<%=rootPath %>/js/jquery-3.2.1.js"></script>
 <script>
 var rootPath="<%=rootPath%>";
@@ -56,6 +59,8 @@ function doMovePage(pageId)
 	   url=rootPath+"/board/board_signin.jsp";
    }else if(pageId=="password"){
 	   url=rootPath+"/board/board_password.jsp";
+   }else if(pageId=="modify"){
+	   url=rootPath+"/board/board_update.jsp";
    }
    location.href=url;
 }
