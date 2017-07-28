@@ -54,8 +54,13 @@ System.out.println(e);
 }
 }
 %>
+<jsp:include page="/common/top.jsp" flush="false">
+<jsp:param value="<%=login %>" name="login"></jsp:param>
+</jsp:include>
+	<div class="container">
+	<div class="starter-template">
 <form action="<%=rootPath %>/board/board_signin.jsp">
-<table border='1'>
+<table border='1' class='table table-bordered table-hover'>
 <tr>
 <td colspan="2"><p align="center"> = 게시판 작성 = </p></td>
 </tr>
@@ -80,5 +85,7 @@ System.out.println(e);
 </tr>
 </table>
 </form>
+</div>
+</div>
 </body>
 </html>

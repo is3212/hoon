@@ -11,6 +11,9 @@
 <title>Insert title here</title>
 </head>
 <body>
+<jsp:include page="/common/top.jsp" flush="false">
+<jsp:param value="<%=login %>" name="login"></jsp:param>
+</jsp:include>
 <script>
 function goBoard(biNum,param2){
 	location.href="<%=rootPath%>/board/board_password.jsp?binum="+biNum;
@@ -21,6 +24,9 @@ function doSearch(){
 	location.href="<%=rootPath%>/board/board_select.jsp?searchTarget=" + searchTarget + "&searchStr=" + searchStr;
 }
 </script>
+
+    <div class="container">
+      <div class="starter-template">
 <%	
 String searchTarget=request.getParameter("searchTarget");
 String searchStr=request.getParameter("searchStr");
@@ -50,7 +56,7 @@ String searchStr=request.getParameter("searchStr");
 		}
 	}
     ResultSet rs = ps.executeQuery();
-    String tableStr="<table border='1'>";
+    String tableStr="<table class='table table-bordered table-hover'>";
     tableStr+="<tr>";
     tableStr+="<td colspan='5' align='center'> = 게시판 = </td>";
     tableStr+="</tr>";
@@ -103,9 +109,12 @@ String searchStr=request.getParameter("searchStr");
 	DBConn2.closeCon();
 	}
 %>
+
 <script>
 </script>
 <input type="button" value="게시글 작성" onclick="doMovePage('signin')"/>
 <input type="button" value="메인가기" onclick="doMovePage('main')"/>
+</div>
+</div>
 </body>
 </html>

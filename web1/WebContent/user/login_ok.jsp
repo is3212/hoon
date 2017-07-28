@@ -11,8 +11,8 @@
 </head>
 <body>
 <%
-String id=request.getParameter("id");
-String pwd=request.getParameter("pwd");
+String id=request.getParameter("useid");
+String pwd=request.getParameter("userpwd");
 
 String result="";
 if(id!=null && pwd!=null){
@@ -73,7 +73,7 @@ else{
 <script>
 var result="<%=result%>";
 alert(result);
-location.href="/user/login.jsp";
+location.href="/main.jsp";
 </script>
 </body>
 </html>

@@ -55,24 +55,46 @@
 	DBConn2.closeCon();
 }
 	%>
-<fieldset>
-<legend>게시글 비밀번호 확인</legend>
-<label>번호 : </label>
-<input type="text" value="<%=binum%>"/><br/>
-<label>제목 : </label>
-<input type="text" value="<%=bititle%>"/><br/>
-<label>내용 : </label>
-<input type="text" value="<%=bicontent%>"/><br/>
-<label>글쓴이 : </label>
-<input type="text" value="<%=creusr%>"/><br/>
-<label>작성날짜 : </label>
-<input type="text" value="<%=credat%>"/><br/>
-<label>아이디 : </label>
-<input type="text" value="<%=userId%>"/><br/>
-<label>게시글 비밀번호 : </label>
-<input type="password" name="bipwd" id="bipwd" placeholder="비밀번호 입력"/><br/>
+	
+	<jsp:include page="/common/top.jsp" flush="false">
+	<jsp:param value="<%=login %>" name="login"></jsp:param>
+	</jsp:include>
+	<div class="container">
+	<div class="starter-template">
+<table border='1' class='table table-bordered table-hover'>
+<tr>
+<td colspan='2' align='center'>==게시글 비밀번호 확인==</td>
+</tr>
+<tr>
+<td align='center'>번호</td>
+<td align='center'><%=binum %></td>
+</tr>
+<tr>
+<td align='center'>제목</td>
+<td align='center'><%=bititle %></td>
+</tr>
+<tr>
+<td align='center'>내용</td>
+<td align='center'><%=bicontent %></td>
+</tr>
+<tr>
+<td align='center'>글쓴이</td>
+<td align='center'><%=creusr %></td>
+</tr>
+<tr>
+<td align='center'>작성날짜</td>
+<td align='center'><%=credat %></td>
+</tr>
+<tr>
+<td align='center'>ID</td>
+<td align='center'><%=userId %></td>
+</tr>
+<tr>
+<td align='center'>게시글 비밀번호</td>
+<td align='center'><input type="password" name="bipwd" id="bipwd" placeholder="비밀번호 입력"/></td>
+</tr>
+</table>
 <input type="button" value="삭제" onclick="deleteBoard()"/> <input type="button" value="수정" onclick="modifyBoard()"/> <input type="button" value="게시판 가기" onclick="doMovePage('board')"/>
-</fieldset>
 <script>
 function deleteBoard(){
 	var bipwd=document.getElementById("bipwd").value;
@@ -83,5 +105,7 @@ function modifyBoard(){
 	location.href="<%=rootPath%>/board/board_update.jsp?binum=<%=binum%>&bipwd=" + pwdbi;
 }
 </script>
+</div>
+</div>
 </body>
 </html>
