@@ -9,11 +9,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="<%=rootPath %>/ui/board.css"/>
 </head>
 <body>
-<jsp:include page="/common/top.jsp" flush="false">
-<jsp:param value="<%=login %>" name="login"></jsp:param>
-</jsp:include>
 <script>
 function goBoard(biNum,param2){
 	location.href="<%=rootPath%>/board/board_password.jsp?binum="+biNum;
@@ -57,22 +55,22 @@ String searchStr=request.getParameter("searchStr");
 	}
     ResultSet rs = ps.executeQuery();
     String tableStr="<table class='table table-bordered table-hover'>";
-    tableStr+="<tr>";
-    tableStr+="<td colspan='5' align='center'> = 게시판 = </td>";
-    tableStr+="</tr>";
+    tableStr+="<thead>";
     tableStr+="<tr>";
     tableStr+="<td align='center'>번호</td>";
-    tableStr+="<td align='center'>제목</td>";
+    tableStr+="<td align='left'>제목</td>";
     tableStr+="<td align='center'>내용</td>";
     tableStr+="<td align='center'>작성자</td>";
     tableStr+="<td align='center'>작성날짜</td>";
     tableStr+="</tr>";
+    tableStr+="</thead>";
+    tableStr+="<tbody>";
     boolean existData=false;
 	while(rs.next()){
 		existData=true;
 	    tableStr+="<tr>";
-	    tableStr+="<td align='center'>" + rs.getString("binum") + "</td>";
-	    tableStr+="<td align='center'><a href='#javascript' onclick='goBoard(" + rs.getInt("binum") +")'>" +  rs.getString("bititle") + "</a></td>";
+	    tableStr+="<td class='num' align='center'>" + rs.getString("binum") + "</td>";
+	    tableStr+="<td class='title' align='left'><a href='#javascript' onclick='goBoard(" + rs.getInt("binum") +")'>" +  rs.getString("bititle") + "</a></td>";
 	    tableStr+="<td align='center'>" + rs.getString("bicontent") + "</td>";
 	    tableStr+="<td align='center'>" + rs.getString("creusr") + "</td>";
 	    tableStr+="<td align='center'>" + rs.getString("credat") + "</td>";
@@ -96,6 +94,7 @@ String searchStr=request.getParameter("searchStr");
 		tableStr+="</td>";
 		tableStr+="</tr>";
 	}
+	tableStr+="</tbody>";
 	tableStr+="</table>";
 	out.println("====" + userId + "==== 님이 접속하였습니다.");
 	out.println(tableStr);

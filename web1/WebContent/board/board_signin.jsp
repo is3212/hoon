@@ -9,6 +9,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="<%=rootPath %>/ui/board.css"/>
 </head>
 <body>
 <%
@@ -54,31 +55,31 @@ System.out.println(e);
 }
 }
 %>
-<jsp:include page="/common/top.jsp" flush="false">
-<jsp:param value="<%=login %>" name="login"></jsp:param>
-</jsp:include>
 	<div class="container">
 	<div class="starter-template">
 <form action="<%=rootPath %>/board/board_signin.jsp">
 <table border='1' class='table table-bordered table-hover'>
+<thead>
 <tr>
-<td colspan="2"><p align="center"> = 게시판 작성 = </p></td>
+<td align="center" colspan="2">게시판 글쓰기</td>
+</tr>
+</thead>
+
+<tr>
+<td>작성자</td>
+<td><input type="text" value="<%=userName%>" size="10" maxlength="8"/></td>
 </tr>
 <tr>
-<td align="center">제목</td>
-<td><input input type="text" name="bititle"/></td>
+<td>제목</td>
+<td><input type="text" name="bititle" size="30"/></td>
 </tr>
 <tr>
-<td align="center">내용</td>
-<td><input input type="text" name="bicontent"/></td>
+<td>내용</td>
+<td><textarea name="bicontent" rows="10" cols="100"/></textarea></td>
 </tr>
 <tr>
-<td align="center">비밀번호</td>
-<td><input type="password" name="bipwd"/></td>
-</tr>
-<tr>
-<td align="center">작성자</td>
-<td><input type="text" value="<%=userName%>"/></td>
+<td>비밀번호</td>
+<td><input type="password" name="bipwd" size="15"/></td>
 </tr>
 <tr>
 <td colspan="2" align="center"><input type="submit" value="작성"/> <input type="button" value="게시판가기" onclick="doMovePage('board')"/></td>

@@ -10,6 +10,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="<%=rootPath %>/ui/board.css"/>
 </head>
 <body>
 <%
@@ -67,31 +68,30 @@ try{
 }
 
 %>
-<jsp:include page="/common/top.jsp" flush="false">
-<jsp:param value="<%=login %>" name="login"></jsp:param>
-</jsp:include>
 <div class="container">
 <div class="starter-template">
 <form action="<%=rootPath %>/board/board_update_ok.jsp"/>
 <table border='1' class='table table-bordered table-hover'>
+<thead>
 <tr>
-<td colspan="2"><p align="center"> = 게시글 수정 = </p></td>
+<td align="center" colspan="2">게시판 글쓰기</td>
+</tr>
+</thead>
+<tr>
+<td align="center">작성자</td>
+<td><input type="text"  name="creusr" id="creusr" value="<%=userName%>" size="10" maxlength="8"/></td>
 </tr>
 <tr>
 <td align="center">제목</td>
-<td><input input type="text" name="bititle" id="bititle" value="<%=bititle%>"/></td>
+<td><input input type="text" name="bititle" id="bititle" value="<%=bititle%>" size="30"/></td>
 </tr>
 <tr>
 <td align="center">내용</td>
-<td><input type="text" name="bicontent" id="bicontent" value="<%=bicontent%>"/></td>
-</tr>
-<tr>
-<td align="center">작성자</td>
-<td><input type="text"  name="creusr" id="creusr" value="<%=userName%>"/></td>
+<td><textarea name="bicontent" rows="10" cols="100"/ value="<%=bicontent%>"/></textarea></td>
 </tr>
 <tr>
 <td align="center">게시글 비밀번호</td>
-<td><input type="password" name="bipwd" id="bipwd" value="<%=bipwd%>"/></td>
+<td><input type="password" name="bipwd" id="bipwd" value="<%=bipwd%>" size="15"/></td>
 </tr>
 </table>
 <td colspan="2" align="center"> <input type="submit" value="수정" /> <input type="hidden" value="<%=binum%>" name="binum"/></td>

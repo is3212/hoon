@@ -9,6 +9,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="<%=rootPath %>/ui/board.css"/>
 </head>
 <body>
 	<%
@@ -56,15 +57,15 @@
 }
 	%>
 	
-	<jsp:include page="/common/top.jsp" flush="false">
-	<jsp:param value="<%=login %>" name="login"></jsp:param>
-	</jsp:include>
+	
 	<div class="container">
 	<div class="starter-template">
 <table border='1' class='table table-bordered table-hover'>
+<thead>
 <tr>
 <td colspan='2' align='center'>==게시글 비밀번호 확인==</td>
 </tr>
+</thead>
 <tr>
 <td align='center'>번호</td>
 <td align='center'><%=binum %></td>

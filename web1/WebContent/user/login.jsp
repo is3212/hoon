@@ -4,17 +4,9 @@
 <%@ page import="java.sql.*"%>
 <%@ page import="com.test.common.DBConn2"%>
 <%@ page import="com.test.dto.UserInfo"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
 <link rel="stylesheet" href="<%=rootPath %>/ui/signin.css"/>
 <body>
 
-	<jsp:include page="/common/top.jsp" flush="false">
-	<jsp:param value="<%=login %>" name="login"></jsp:param>
-	</jsp:include>
 <div class="container">
 <center><img src="http://cfile25.uf.tistory.com/image/2521124C588467AA12BF0A" style="width:304px;height:250px"></center>
       <form class="form-signin"  action="<%=rootPath %>/user/login_ok.jsp">
@@ -28,7 +20,7 @@
             <input type="checkbox" value="remember-me"> Remember me
           </label>
         </div>
-        <button id="btn2" class="btn btn-lg btn-primary btn-block" type="submit">Login in</button>
+        <button id="btn2" type="button"  class="form-control2" >Login in</button>
       </form>
 
     </div> <!-- /container -->
@@ -42,4 +34,39 @@
     });
     </script>
      -->
+     <script>
+     $("#btn2").click(function(){                            //제이슨을 이용한 ajax
+    	 var id=$("#useid").val();
+    	 var pwd=$("#userpwd").val();
+    	 var param={};
+    	 param["useid"]=id;
+    	 param["userpwd"]=pwd;
+    	 param=JSON.stringify(param);
+    	 $.ajax({ 
+             type     : "POST"
+         ,   url      : "/user/login_ok.jsp"
+         ,   dataType : "json" 
+         ,   beforeSend: function(xhr) {
+             xhr.setRequestHeader("Accept", "application/json");
+             xhr.setRequestHeader("Content-Type", "application/json");
+         }
+         ,   data     : param
+         ,   success : function(result){
+            alert(result.msg);
+            if(result.login=="ok"){
+            	location.href="<%=rootPath%>/main.jsp"	
+            }else{
+            	$("#useid").val("");
+            	var pwd=$("#userpwd").val("");
+            }
+         }
+         ,   error : function(xhr, status, e) {
+               alert("에러 : "+e);
+        },
+        done : function(e) {
+        }
+        });
+     });
+     </script>
 </body>
+</html>
