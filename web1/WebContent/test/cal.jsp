@@ -1,49 +1,34 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
-</head>
-<script src="/js/jquery-3.2.1.js"></script>
+<%@ include file="/common/header.jsp"%>
 <body>
-	<form action="/test/cal_ok.jsp">
-		<table border='1'>
-			<tr>
-				<td>숫자1</td>
-				<td>연산자</td>
-				<td>숫자2</td>
-				<td>버튼</td>
-				<td>결과값</td>
-			</tr>
-			<tr>
-				<td><input type="text" name="num1" id="num1" /></td>
-				<td><select id="op" name="op">
-						<option value="+">+</option>
-						<option value="-">-</option>
-						<option value="*">*</option>
-						<option value="/">/</option>
-				</select></td>
-				<td><input type="text" name="num2" id="num2" /></td>
-				<td><button type="button" id="btn" name="btn">계산</button></td>
-				<td><input type="text" id="result" name="result"></td>
-			</tr>
+		<div class="container">
+		<table id="table" data-height="460"
+			class="table table-bordered table-hover">
+			<thead>
+				<tr>
+					<th data-field="calnum"  class="text-center">번호</th>
+					<th data-field="num1"  class="text-center">숫자1</th>
+					<th data-field="num2"  class="text-center">숫자2</th>
+					<th data-field="op"  class="text-center">연산자</th>
+					<th data-field="result"  class="text-center">결과값</th>
+				</tr>
+			</thead>
+			<tbody id="result_tbody">
+			</tbody>
 		</table>
-	</form>
+	</div>
+연산자 : <input type="text" id="op"/><input type="button" id="getCal" value="계산리스트호출"/>
+<div id="result_div" class="container"></div>
 	<script>
-		$("#btn").click(function() {
-			var num1 = $("#num1").val();
+		$("#getCal").click(function() {
 			var op = $("#op").val();
-			var num2 = $("#num2").val();
 			var param = {};
-			param["num1"] = num1;
 			param["op"] = op;
-			param["num2"] = num2;
 			param = JSON.stringify(param);
-			$.ajax({
+			var a={
 				type : "POST",
-				url : "/test/cal_ok.jsp",
+				url : "/test/cal_select.jsp",
 				dataType : "json",        //text로 하면 파싱이 안된다. {"num",7} 이런식으로 나온다.
 				beforeSend : function(xhr) {
 					xhr.setRequestHeader("Accept", "application/json");
@@ -51,15 +36,50 @@
 				},
 				data : param,
 				success : function(result) {
-				$("#result").val(result.msg);
+				$("#table").bootstrapTable({
+					data:result
+				});
 				},
 				error : function(xhr, status, e) {
 					alert("에러 : " + e);
 				},
 				done : function(e) {
 				}
-			});
+			};
+			$.ajax(a);
 		});
-	</script>
-</body>
-</html>
+			$("input[id*='cal']").click(function(){
+				var id = this.id;
+				var idx = id.substring(id.length-1);
+				var num1 = $("#num"+ idx + "_1").val();
+				var num2 = $("#num"+ idx + "_2").val();
+
+				var param = {};
+				param["num1"] = num1;
+				param["num2"] = num2;
+				param["op"] = ops[idx];
+				param = JSON.stringify(param);
+				var a = { 
+				        type     : "POST"
+				    	    ,   url      : "/test/cal_ok.jsp"
+				    	    ,   dataType : "json" 
+				    	    ,   beforeSend: function(xhr) {
+				    	        xhr.setRequestHeader("Accept", "application/json");
+				    	        xhr.setRequestHeader("Content-Type", "application/json");
+				    	    }
+				    	    ,   data     : param
+				    	    ,   success : function(result){ 
+				    	    	alert(result.insert);
+				    	    	$("#result" + idx).val(result.num);  
+				    	    }
+				    	    ,   error : function(xhr, status, e) {
+				    		    	alert("에러 : "+e);
+				    		},
+				    		done : function(e) {
+				    		}
+				    		};
+				$.ajax(a);
+			});
+			</script>
+			</body>
+			</html>

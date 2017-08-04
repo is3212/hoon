@@ -24,16 +24,7 @@
       </form>
 
     </div> <!-- /container -->
-    <!--
-    <script>
-    $("button").click(function(){  //$:  document.getElement와 같다. $() 괄호안에는 태그, id, name 등 모두 쓸 수 있다.    ,  즉 셀렉터라 한다!!,    $모양은 무조건 j쿼리(셀렉터 지원)
-    	alert(1);
-    });
-    $("#btn2").click(function(){  //#이붙으면 id를 찾겠다.  id가 btn2인거에 모두 적용된다.
-    	alert(2);
-    });
-    </script>
-     -->
+
      <script>
      $("#btn2").click(function(){                            //제이슨을 이용한 ajax
     	 var id=$("#useid").val();

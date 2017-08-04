@@ -30,7 +30,7 @@ var list = [{"result":"4","calnum":"6","op":"+","num1":"2","num2":"2"},
 	      tableStr+="</tr>";
 	   }
 	   tableStr+="</table>";
-	   document.getElementById("result_div").innerHTML = tableStr;
+	   $("#result_div").html(tableStr);
 	});
 	
 </script>

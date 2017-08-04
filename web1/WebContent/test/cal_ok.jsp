@@ -13,19 +13,19 @@ String op=(String)j.get("op");
 String num2Str=(String)j.get("num2");
 int num1=Integer.parseInt(num1Str);
 int num2=Integer.parseInt(num2Str);
-int num3=0;
+int result=0;
 
 if(op.equals("+")){
-	num3=num1+num2;
+	result=num1+num2;
 
 }else if(op.equals("-")){
-	num3=num1-num2;
+	result=num1-num2;
 
 }else if(op.equals("*")){
-	num3=num1*num2;
+	result=num1*num2;
 
 }else if(op.equals("/")){
-	num3=num1/num2;
+	result=num1/num2;
 }
 Connection con = null;
 PreparedStatement ps=null;
@@ -38,7 +38,7 @@ try{
 	ps.setInt(1,num1);
 	ps.setString(2,op);
 	ps.setInt(3,num2);
-	ps.setInt(4,num3);
+	ps.setInt(4,result);
 	
 	insertResult=ps.executeUpdate();
 	if(insertResult==1){
@@ -52,7 +52,7 @@ try{
 	DBConn2.closeCon();
 }
 HashMap<String, Integer>  hm=new HashMap<String, Integer>();
-hm.put("msg",num3);
+hm.put("msg",result);
 hm.put("insert",insertResult);
 String json=new Gson().toJson(hm);
 out.write(json);
