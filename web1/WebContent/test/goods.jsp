@@ -30,6 +30,10 @@
 </tbody>
 </table>
 </div>
+<div class="jb-center" style="text-align: center">
+<ul class="pagination" id="page">
+</ul>
+</div>
 <select id="s_vendor">
 <option value="">회사선택</option>
 </select><br/>
@@ -37,6 +41,9 @@ vendor 번호 : <input type="text" id="vinum"/>
 <input type="button" id=btn value="호출"/>
 <script>
 $(document).ready(function(){
+	var params={};
+	params["nowPage"]="101";
+	params=JSON.stringify(params);
 	var a={
 			type:"POST",
 			url : "/test/vendorinfo.jsp",
@@ -45,12 +52,39 @@ $(document).ready(function(){
 				xhr.setRequestHeader("Accept", "application/json");
 				xhr.setRequestHeader("Content-Type", "application/json");
 			},
-			data:null,
+			data:params,
 			success:function(results){
-				for(var i=0, max=results.length;i<max;i++){
-					var result=results[i];
-					$("#s_vendor").append("<option value='" + result.vinum + "'>" + result.viname + "</option>");
+					var vendorList=results.vendorList;
+					var goodsList=results.goodsList;
+					var pageInfo=results.pageInfo;
+
+					var pageStr="<li><a>◀◀</a></li>";
+					pageStr+="<li><a>◀</a></li>";
+					var blockCnt= new Number(pageInfo.blockCnt);
+					var nowPage=new Number(pageInfo.nowPage);
+					var startBlock=Math.floor((nowPage-1)/blockCnt)*10+1; 
+					var endBlock=startBlock+blockCnt-1;
+					var totalPageCnt=new Number(pageInfo.totalPageCnt);
+					if(endBlock>totalPageCnt){
+						endBlock=totalPageCnt;
+					}
+					for(var i=startBlock,max=endBlock;i<=max;i++){
+						if(i==pageInfo.nowPage){
+							pageStr+="<li class='active'><a>" + i + "</a></li>";
+						}else{
+						pageStr+="<li><a>" + i + "</a></li>";
+						}
+					}
+					pageStr+="<li><a>▶</a></li>";
+					pageStr+="<li><a>▶▶</a></li>";
+
+					$("#page").html(pageStr);
+					for(var i=0, max=vendorList.length;i<max;i++){
+					$("#s_vendor").append("<option value='" + vendorList[i].vinum + "'>" + vendorList[i].viname + "</option>");
 				}
+					$("#table").bootstrapTable({
+						data:goodsList
+					});
 			},
 			error:function(xhr,status,e){
 				alert("에러 : " + e);
