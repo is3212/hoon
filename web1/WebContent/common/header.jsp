@@ -47,14 +47,15 @@ String loginStr="로그인";
 if(login){
 	loginStr="로그아웃";
 }
+String version="1.3.2";
 %>
-<script src="<%=rootPath %>/js/jquery-3.2.1.js"></script>
-<script src="<%=rootPath%>/ui/btsp3.7.7/js/bootstrap.min.js"></script>
-<script src="<%=rootPath %>/ui/btsp3.7.7/js/bootstrap-table.js"></script>
-<link rel="stylesheet" href="<%=rootPath%>/ui/btsp3.7.7/css/bootstrap-theme.min.css"/>
-<link rel="stylesheet" href="<%=rootPath%>/ui/btsp3.7.7/css/bootstrap.min.css"/>
-<link rel="stylesheet" href="<%=rootPath %>/ui/common.css"/>
-<link rel="stylesheet" href="<%=rootPath %>/ui/btsp3.7.7/css/bootstrap-table.css"/>
+<script src="<%=rootPath %>/js/jquery-3.2.1.js?version=<%=version%>"></script>
+<script src="<%=rootPath%>/ui/btsp3.7.7/js/bootstrap.min.js?version=<%=version%>"></script>
+<script src="<%=rootPath %>/ui/btsp3.7.7/js/bootstrap-table.js?version=<%=version%>"></script>
+<link rel="stylesheet" href="<%=rootPath%>/ui/btsp3.7.7/css/bootstrap-theme.min.css?version=<%=version%>"/>
+<link rel="stylesheet" href="<%=rootPath%>/ui/btsp3.7.7/css/bootstrap.min.css?version=<%=version%>"/>
+<link rel="stylesheet" href="<%=rootPath %>/ui/common.css?version=<%=version%>"/>
+<link rel="stylesheet" href="<%=rootPath %>/ui/btsp3.7.7/css/bootstrap-table.css?version=<%=version%>"/>
 <script>
 var rootPath="<%=rootPath%>";
 $(document).ready(function(){                //document: 문서전체ready: onload,즉 준비가되면,      위에서 받은 url경로를 nowurl에 대입
@@ -79,6 +80,25 @@ function doMovePage(pageId)
    location.href=url;
 }
 
+function goPage(pParams,pUrl,pCallBackFunc){
+	var params=JSON.stringify(pParams);
+	$.ajax({
+		type : "POST",
+		url : pUrl,
+		dataType:"json",
+		beforeSend:function(xhr){
+			xhr.setRequestHeader("Accept","application/json");
+			xhr.setRequestHeader("Content-Type","application/json");
+		}
+	,  data : params
+	,  success:pCallBackFunc
+	,  error : function(xhr,status,e){
+		alert("에러 : " + e);
+	},
+	complete : function(){
+	}
+	});
+}
 </script>
 <body>
 <head>

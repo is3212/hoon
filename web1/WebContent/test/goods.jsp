@@ -39,62 +39,85 @@
 </select><br/>
 vendor 번호 : <input type="text" id="vinum"/>
 <input type="button" id=btn value="호출"/>
+<div id="result_div" class="container"></div>
 <script>
+var thisBlockCnt=0;
+var thisNowPage=0;
+var thisTotalPage=0;
+function callback(results){
+	var vendorList=results.vendorList;
+	var goodsList=results.goodsList;
+	var pageInfo=results.pageInfo;
+ 
+	var pageStr="<li><a>◀◀◀</a></li>";
+	pageStr+="<li><a>◀◀</a></li>";
+	pageStr+="<li><a>◀</a></li>";
+	var blockCnt= new Number(pageInfo.blockCnt);
+	thisBlockCnt=blockCnt;
+	var nowPage=new Number(pageInfo.nowPage);
+	thisNowPage=nowPage;
+	var startBlock=Math.floor((nowPage-1)/blockCnt)*10+1; 
+	var endBlock=startBlock+blockCnt-1;
+	var totalPageCnt=new Number(pageInfo.totalPageCnt);
+	thisTotalPage=totalPageCnt
+	if(endBlock>totalPageCnt){
+		endBlock=totalPageCnt;
+	}
+	for(var i=startBlock,max=endBlock;i<=max;i++){
+		if(i==pageInfo.nowPage){
+			pageStr+="<li class='active'><a>" + i + "</a></li>";
+		}else{
+		pageStr+="<li><a>" + i + "</a></li>";
+		}
+	}
+	pageStr+="<li><a>▶</a></li>";
+	pageStr+="<li><a>▶▶</a></li>";
+	pageStr+="<li><a>▶▶▶</a></li>";
+
+	$("#page").html(pageStr);
+	for(var i=0, max=vendorList.length;i<max;i++){
+		$("#s_vendor").append("<option value='" + vendorList[i].vinum + "'>" + vendorList[i].viname + "</option>");
+	}
+    $("#table").bootstrapTable('destroy');
+	$("#table").bootstrapTable({
+		data:goodsList
+	});
+	setEvent();
+}
 $(document).ready(function(){
 	var params={};
-	params["nowPage"]="101";
-	params=JSON.stringify(params);
-	var a={
-			type:"POST",
-			url : "/test/vendorinfo.jsp",
-			dataType:"json",
-			beforesend:function(xhr){
-				xhr.setRequestHeader("Accept", "application/json");
-				xhr.setRequestHeader("Content-Type", "application/json");
-			},
-			data:params,
-			success:function(results){
-					var vendorList=results.vendorList;
-					var goodsList=results.goodsList;
-					var pageInfo=results.pageInfo;
-
-					var pageStr="<li><a>◀◀</a></li>";
-					pageStr+="<li><a>◀</a></li>";
-					var blockCnt= new Number(pageInfo.blockCnt);
-					var nowPage=new Number(pageInfo.nowPage);
-					var startBlock=Math.floor((nowPage-1)/blockCnt)*10+1; 
-					var endBlock=startBlock+blockCnt-1;
-					var totalPageCnt=new Number(pageInfo.totalPageCnt);
-					if(endBlock>totalPageCnt){
-						endBlock=totalPageCnt;
-					}
-					for(var i=startBlock,max=endBlock;i<=max;i++){
-						if(i==pageInfo.nowPage){
-							pageStr+="<li class='active'><a>" + i + "</a></li>";
-						}else{
-						pageStr+="<li><a>" + i + "</a></li>";
-						}
-					}
-					pageStr+="<li><a>▶</a></li>";
-					pageStr+="<li><a>▶▶</a></li>";
-
-					$("#page").html(pageStr);
-					for(var i=0, max=vendorList.length;i<max;i++){
-					$("#s_vendor").append("<option value='" + vendorList[i].vinum + "'>" + vendorList[i].viname + "</option>");
-				}
-					$("#table").bootstrapTable({
-						data:goodsList
-					});
-			},
-			error:function(xhr,status,e){
-				alert("에러 : " + e);
-			},
-			complete:function(){
-				alert("실패던지 성공이던지 나랑 무슨상관 난 실행함");
+	params["nowPage"]="1";
+	goPage(params, "/test/vendorinfo.jsp", callback);
+});
+function setEvent(){
+	$("ul[class='pagination']>li>a").click(function(){
+		var goPageNum=new Number(this.innerHTML);
+		if(isNaN(goPageNum)){
+			if(this.innerHTML=="◀"){
+				thisNowPage-=1;
+			}else if(this.innerHTML=="◀◀"){
+				thisNowPage=Math.floor((thisNowPage-1)/thisBlockCnt)*10-9;;
+			}else if(this.innerHTML=="◀◀◀"){
+				thisNowPage=1;
+			}else if(this.innerHTML=="▶"){
+				thisNowPage+=1;
+			}else if(this.innerHTML=="▶▶"){
+				thisNowPage=Math.floor((thisNowPage-1)/thisBlockCnt)*10+11;
+			}else if(this.innerHTML=="▶▶▶"){
+				thisNowPage=thisTotalPage;
 			}
-	};
-	$.ajax(a);
-})
+			if(thisNowPage<=0){
+				thisNowPage=1;
+			}else if(thisNowPage>thisTotalPage){
+				thisNowPage=thisTotalPage;
+			}
+			goPageNum=thisNowPage;
+		}
+		var params={};
+		params["nowPage"]="" +goPageNum; 
+		goPage(params,"/test/vendorinfo.jsp",callback);
+	})
+}
 $("#btn").click(function(){
 	var vinum=$("#vinum").val();
 	var viname=$("#s_vendor").val();
