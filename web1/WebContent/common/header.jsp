@@ -57,6 +57,47 @@ String version="1.3.2";
 <link rel="stylesheet" href="<%=rootPath %>/ui/common.css?version=<%=version%>"/>
 <link rel="stylesheet" href="<%=rootPath %>/ui/btsp3.7.7/css/bootstrap-table.css?version=<%=version%>"/>
 <script>
+Number.prototype.equals=function(obj){
+	if(obj instanceof Number){
+		return this.toString()==obj.toString();
+	}
+	return this==obj;
+}
+function setPagination(pageInfo, objId){
+	var pageStr = "";
+	var sNum=pageInfo.startBlock;
+	var eNum=pageInfo.endBlock;
+	var nPage=pageInfo.nowPage;
+	var nTotal=pageInfo.totalPageCnt;
+	if(nPage==1){
+		pageStr += "<li class='disabled'><a >◀◀◀</a></li>";
+		pageStr += "<li class='disabled'><a >◀◀</a></li>";
+		pageStr += "<li class='disabled' ><a >◀</a></li>";
+	}else{ 
+		pageStr="<li><a>◀◀◀</a></li>";
+		pageStr += "<li><a>◀◀</a></li>";
+		pageStr += "<li><a>◀</a></li>";
+	}
+	for(var i=sNum, max=eNum;i<=max;i++){
+		if(i==nPage){
+			pageStr += "<li class='active'><a>" + i + "</a></li>";
+		}else{
+			pageStr += "<li><a>" + i + "</a></li>";
+		}
+	}
+	if(nPage==nTotal){
+		pageStr += "<li class='disabled'><a>▶</a></li>";
+		pageStr += "<li class='disabled'><a>▶▶</a></li>";
+		pageStr += "<li class='disabled'><a>▶▶▶</a></li>";
+	}else{ 
+		pageStr += "<li><a>▶</a></li>";
+		pageStr += "<li><a>▶▶</a></li>";
+		pageStr += "<li><a>▶▶▶</a></li>";
+	}
+
+	$("#" + objId).html(pageStr);
+}
+
 var rootPath="<%=rootPath%>";
 $(document).ready(function(){                //document: 문서전체ready: onload,즉 준비가되면,      위에서 받은 url경로를 nowurl에 대입
 	var nowUrl="<%=nowUrl%>";
@@ -78,6 +119,10 @@ function doMovePage(pageId)
 	   url=rootPath+"/board/board_update.jsp";
    }
    location.href=url;
+}
+
+function alertOp(){
+	alert($("#op").val());
 }
 
 function goPage(pParams,pUrl,pCallBackFunc){
