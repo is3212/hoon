@@ -49,6 +49,8 @@ if(login){
 }
 String version="1.3.2";
 %>
+<script src="<%=rootPath %>/ui/common.js?version=<%=version%>"></script>
+
 <script src="<%=rootPath %>/js/jquery-3.2.1.js?version=<%=version%>"></script>
 <script src="<%=rootPath%>/ui/btsp3.7.7/js/bootstrap.min.js?version=<%=version%>"></script>
 <script src="<%=rootPath %>/ui/btsp3.7.7/js/bootstrap-table.js?version=<%=version%>"></script>
@@ -57,46 +59,7 @@ String version="1.3.2";
 <link rel="stylesheet" href="<%=rootPath %>/ui/common.css?version=<%=version%>"/>
 <link rel="stylesheet" href="<%=rootPath %>/ui/btsp3.7.7/css/bootstrap-table.css?version=<%=version%>"/>
 <script>
-Number.prototype.equals=function(obj){
-	if(obj instanceof Number){
-		return this.toString()==obj.toString();
-	}
-	return this==obj;
-}
-function setPagination(pageInfo, objId){
-	var pageStr = "";
-	var sNum=pageInfo.startBlock;
-	var eNum=pageInfo.endBlock;
-	var nPage=pageInfo.nowPage;
-	var nTotal=pageInfo.totalPageCnt;
-	if(nPage==1){
-		pageStr += "<li class='disabled'><a >◀◀◀</a></li>";
-		pageStr += "<li class='disabled'><a >◀◀</a></li>";
-		pageStr += "<li class='disabled' ><a >◀</a></li>";
-	}else{ 
-		pageStr="<li><a>◀◀◀</a></li>";
-		pageStr += "<li><a>◀◀</a></li>";
-		pageStr += "<li><a>◀</a></li>";
-	}
-	for(var i=sNum, max=eNum;i<=max;i++){
-		if(i==nPage){
-			pageStr += "<li class='active'><a>" + i + "</a></li>";
-		}else{
-			pageStr += "<li><a>" + i + "</a></li>";
-		}
-	}
-	if(nPage==nTotal){
-		pageStr += "<li class='disabled'><a>▶</a></li>";
-		pageStr += "<li class='disabled'><a>▶▶</a></li>";
-		pageStr += "<li class='disabled'><a>▶▶▶</a></li>";
-	}else{ 
-		pageStr += "<li><a>▶</a></li>";
-		pageStr += "<li><a>▶▶</a></li>";
-		pageStr += "<li><a>▶▶▶</a></li>";
-	}
 
-	$("#" + objId).html(pageStr);
-}
 
 var rootPath="<%=rootPath%>";
 $(document).ready(function(){                //document: 문서전체ready: onload,즉 준비가되면,      위에서 받은 url경로를 nowurl에 대입
@@ -105,18 +68,18 @@ $(document).ready(function(){                //document: 문서전체ready: onlo
 })                                                                                                                                                      //.attr( attributeName, value ) : 선택자에 의해 선택된 요소에 하나 이상의 속성을 부여할 수 있다.
 function doMovePage(pageId)
 {
-   var url = "";
+   var url = "<%=rootPath%>";
    if(pageId == "board")
    {
-      url = rootPath + "/board/board_select.jsp";
+      url += "/board/board_select.jsp";
    }else if(pageId=="main"){
-	url=rootPath+"/main.jsp";
+	url+="/";
    }else if(pageId=="signin"){
-	   url=rootPath+"/board/board_signin.jsp";
+	   url+="/board/board_signin.jsp";
    }else if(pageId=="password"){
-	   url=rootPath+"/board/board_password.jsp";
+	   url+="/board/board_password.jsp";
    }else if(pageId=="modify"){
-	   url=rootPath+"/board/board_update.jsp";
+	   url+="/board/board_update.jsp";
    }
    location.href=url;
 }
@@ -125,25 +88,6 @@ function alertOp(){
 	alert($("#op").val());
 }
 
-function goPage(pParams,pUrl,pCallBackFunc){
-	var params=JSON.stringify(pParams);
-	$.ajax({
-		type : "POST",
-		url : pUrl,
-		dataType:"json",
-		beforeSend:function(xhr){
-			xhr.setRequestHeader("Accept","application/json");
-			xhr.setRequestHeader("Content-Type","application/json");
-		}
-	,  data : params
-	,  success:pCallBackFunc
-	,  error : function(xhr,status,e){
-		alert("에러 : " + e);
-	},
-	complete : function(){
-	}
-	});
-}
 </script>
 <body>
 <head>

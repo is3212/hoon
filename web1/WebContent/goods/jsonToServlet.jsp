@@ -18,7 +18,7 @@ testParam["viName"]="회사명";
 function callback(result){
 	alert(result.giDesc);
 }
-goPage(testParam,"/test.goods",callback);
+movePageWithAjax(testParam,"/test.goods",callback);
 </script>
 </body>
 </html>
