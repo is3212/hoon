@@ -15,9 +15,9 @@ function movePageWithAjax(pParams,pUrl,pCallBackFunc, pMethod){
 	$.ajax({
 		type : pMethod?pMethod:"POST",              //pMethod가 undefined면 type이 post가 된다.
 		url : pUrl,
-		dataType:"json",
+		dataType:"json",                //json으로 받겟다!!!
 		beforeSend:function(xhr){
-			xhr.setRequestHeader("Accept","application/json");
+			xhr.setRequestHeader("Accept","application/json");                                      //   /json 형태로 보내겠다!!!
 			xhr.setRequestHeader("Content-Type","application/json");
 		}
 	,  data : params

@@ -1,9 +1,6 @@
 <%@ include file="/common/header.jsp" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="java.sql.*"%>
-<%@ page import="com.test.common.DBConn2"%>
-<%@ page import="com.test.dto.UserInfo"%>
 <div class="container-view">
 <table id="table" data-height="460" class="table table-bordered table-hover">
 <thead>
@@ -13,6 +10,7 @@
 <tr>
 <td class="col-md-2">상품번호</td>
 <td class="col-md-4" colspan="2"><%=request.getParameter("giNum") %></td>
+</tr>
 <tr>
 <td>상품이름</td>
 <td colspan="2"><%=request.getParameter("giName") %></td>

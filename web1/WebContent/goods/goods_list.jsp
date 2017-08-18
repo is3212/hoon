@@ -39,8 +39,8 @@
 		location.href="/goods/goods_insert.jsp";
 	})
 	$("#searchGoods").click(function(){
-		var giName=$("#giName").val().trim;
-		var viNum=$("#s_vendor").val().trim;
+		var giName=$("#giName").val().trim();
+		var viNum=$("#s_vendor").val().trim();
 		if(giName=="" && viNum==""){
 			alert("회사 선택이나 제품명을 입력해주세요");
 			return
