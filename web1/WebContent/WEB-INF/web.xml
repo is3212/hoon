@@ -32,6 +32,15 @@
     <servlet-name>VendorServlet</servlet-name>
     <url-pattern>*.vendor</url-pattern>
   </servlet-mapping>
+  
+   <servlet>
+    <servlet-name>FormTest</servlet-name>
+    <servlet-class>com.test.servlet.test.FormServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FormTest</servlet-name>
+    <url-pattern>*.formtest</url-pattern>
+  </servlet-mapping>
 
    <servlet>
     <servlet-name>BoardServlet</servlet-name>

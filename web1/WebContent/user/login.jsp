@@ -12,7 +12,7 @@
       <form class="form-signin"  action="<%=rootPath %>/user/login_ok.jsp">
         <h2 class="form-signin-heading">Please login</h2>
         <label for="inputEmail" class="sr-only">ID</label>
-        <input type="text" name="useid"  id="useid" class="form-control" placeholder="ID" required autofocus>
+        <input type="text" name="userid"  id="userid" class="form-control" placeholder="ID" required autofocus>
         <label for="inputPassword" class="sr-only">Password</label>
         <input type="password" name="userpwd" id="userpwd" class="form-control" placeholder="Password" required>
         <div class="checkbox">
@@ -27,10 +27,10 @@
 
      <script>
      $("#btn2").click(function(){                            //제이슨을 이용한 ajax
-    	 var id=$("#useid").val();
+    	 var id=$("#userid").val();
     	 var pwd=$("#userpwd").val();
     	 var param={};
-    	 param["useid"]=id;
+    	 param["userid"]=id;
     	 param["userpwd"]=pwd;
     	 param=JSON.stringify(param);
     	 $.ajax({ 
@@ -47,7 +47,7 @@
             if(result.login=="ok"){
             	location.href="<%=rootPath%>/main.jsp"	
             }else{
-            	$("#useid").val("");
+            	$("#userid").val("");
             	var pwd=$("#userpwd").val("");
             }
          }
